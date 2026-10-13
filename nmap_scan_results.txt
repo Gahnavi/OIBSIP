@@ -1,0 +1,12 @@
+# Nmap 7.991 scan initiated Tue Oct 13 19:02:32 2026 as: nmap -sV -oN nmap_scan_results.txt 127.0.0.1
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.0012s latency).
+Not shown: 997 closed tcp ports (reset)
+PORT     STATE SERVICE       VERSION
+135/tcp  open  msrpc         Microsoft Windows RPC
+445/tcp  open  microsoft-ds?
+3306/tcp open  mysql         MySQL 8.0.33
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Tue Oct 13 19:02:42 2026 -- 1 IP address (1 host up) scanned in 9.64 seconds
