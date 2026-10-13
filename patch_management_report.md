@@ -12,22 +12,24 @@ Organizations should monitor vendor security advisories and trusted vulnerabilit
 
 ## 3. Real-World Security Incidents
 
-### 3.1 WannaCry ransomware — 2017
+### 3.1 WannaCry Ransomware — 2017
 
 WannaCry spread by exploiting a vulnerability in Microsoft Windows' SMBv1 implementation. Microsoft had released security updates before the outbreak, but some systems remained unpatched.
 
 **Consequences:**
+
 - Systems and files became inaccessible.
 - Hospitals and businesses experienced disruption.
 - Organizations faced recovery costs and operational delays.
 
 **Lesson:** Apply critical security updates promptly, maintain supported systems, and keep reliable backups.
 
-### 3.2 Equifax data breach — 2017
+### 3.2 Equifax Data Breach — 2017
 
 Equifax disclosed a major breach involving the exploitation of a known vulnerability in Apache Struts. A patch was available before the breach was discovered.
 
 **Consequences:**
+
 - Sensitive personal information was exposed.
 - The incident caused significant financial and reputational damage.
 - It highlighted the importance of asset inventory and patch verification.
@@ -57,7 +59,7 @@ The process should be repeated regularly, with exceptions documented and reviewe
 ## 6. Common Challenges and Solutions
 
 | Challenge | Suggested Solution |
-
+|---|---|
 | Legacy or unsupported systems | Upgrade, replace, or isolate them with documented risk acceptance |
 | Compatibility concerns | Test patches in a staging environment |
 | Limited maintenance windows | Plan regular maintenance and emergency patch windows |
