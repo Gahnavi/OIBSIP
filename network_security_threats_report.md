@@ -10,7 +10,7 @@ Network security protects computer networks, devices, and data from unauthorized
 
 A Denial of Service (DoS) attack attempts to make a service unavailable by overwhelming it with traffic or requests. A Distributed Denial of Service (DDoS) attack uses multiple compromised devices to send traffic to a target.
 
-### Real-world example
+### Real-World Example
 
 In October 2016, the Mirai botnet was used in a major DDoS attack against DNS provider Dyn. The disruption affected access to multiple popular websites and online services.
 
@@ -32,9 +32,9 @@ In October 2016, the Mirai botnet was used in a major DDoS attack against DNS pr
 
 A Man-in-the-Middle attack occurs when an attacker secretly intercepts or alters communication between two parties without their knowledge.
 
-### Real-world example
+### Real-World Example
 
-In 2011, the DigiNotar certificate authority was compromised, and fraudulent certificates were issued. The incident demonstrated how compromised certificate authorities can allow attackers to impersonate trusted websites and expose users to interception risks.
+In 2011, the DigiNotar certificate authority was compromised, and fraudulent certificates were issued. The incident demonstrated the risks associated with compromised certificate authorities and the importance of secure certificate validation.
 
 ### Impact
 
@@ -54,7 +54,7 @@ In 2011, the DigiNotar certificate authority was compromised, and fraudulent cer
 
 IP spoofing involves creating IP packets with a forged source address. It can hide the apparent origin of traffic or support other attacks, including reflection and amplification DDoS attacks.
 
-### Real-world example
+### Real-World Example
 
 In February 2018, GitHub experienced a large DDoS attack involving memcached servers that amplified traffic directed at GitHub. Reflection and amplification attacks can involve forged source IP addresses, causing responses to be sent to a victim. This incident demonstrated the importance of DDoS protection and anti-spoofing controls.
 
@@ -94,8 +94,8 @@ DNS spoofing involves providing false Domain Name System (DNS) information so th
 |---|---|---|---|
 | DoS/DDoS | Disrupt availability | Service outage | DDoS protection and traffic filtering |
 | MITM | Intercept communication | Data or credential theft | HTTPS/TLS and secure authentication |
-| IP spoofing | Forge source IP addresses | Reflection attacks and harder attribution | Ingress/egress filtering |
-| DNS spoofing | Redirect users to false destinations | Phishing and traffic redirection | DNSSEC validation and secure DNS |
+| IP Spoofing | Forge source IP addresses | Reflection attacks and harder attribution | Ingress/egress filtering |
+| DNS Spoofing | Redirect users to false destinations | Phishing and traffic redirection | DNSSEC validation and secure DNS |
 
 ## 7. Key Takeaways
 
@@ -111,4 +111,8 @@ DNS spoofing involves providing false Domain Name System (DNS) information so th
 4. RFC 3704 — Ingress Filtering for Multihomed Networks: https://www.rfc-editor.org/rfc/rfc3704
 5. ICANN — DNSSEC: https://www.icann.org/resources/pages/dnssec-what-is-it-2019-03-05-en
 6. GitHub Engineering — February 28th DDoS Incident Report: https://github.blog/news-insights/company-news/ddos-incident-report/
-7. DigiNotar certificate authority compromise — Background information: https://en.wikipedia.org/wiki/DigiNotar
+7. DigiNotar incident background: https://en.wikipedia.org/wiki/DigiNotar
+
+## 9. Conclusion
+
+Network threats can affect the confidentiality, integrity, and availability of systems and data. Organizations can reduce risk through layered security controls, secure communication, traffic monitoring, timely patching, and effective incident response.
