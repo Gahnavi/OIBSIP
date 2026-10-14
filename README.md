@@ -2,7 +2,7 @@
 
 ## About
 
-This repository contains my Security Analyst internship task submissions for Oasis Infobyte. The projects cover network scanning, network security threats, social engineering attacks, and patch management.
+This repository contains my Security Analyst internship task submissions for Oasis Infobyte. The tasks cover network scanning, network security threats, social engineering attacks, and patch management.
 
 ## Tasks
 
@@ -11,29 +11,41 @@ This repository contains my Security Analyst internship task submissions for Oas
 - **Task 5:** Research Report — Social Engineering Attacks
 - **Task 6:** Research Report — Importance of Patch Management
 
+---
+
 ## Task 1: Basic Network Scanning with Nmap
 
 ### Objective
 
-To identify open ports, detect running services, and perform operating-system detection on my own computer using Nmap.
+To perform network scans, identify open ports and services, and explore operating-system detection using Nmap in authorized local environments.
 
 ### Environment
 
+**Windows environment**
 - Operating System: Windows 11
 - Nmap Version: 7.99.1
 - Target: `127.0.0.1` (localhost)
 
+**Ubuntu WSL environment**
+- Operating System: Ubuntu 22.04 on Windows Subsystem for Linux (WSL)
+- Nmap Version: 7.80
+- Target: `127.0.0.1` (localhost)
+
 ### Nmap Installation
 
-1. Download Nmap from the official website: https://nmap.org/download.html
-2. Run the Windows installer and follow the installation instructions.
-3. Open Command Prompt and verify the installation:
+For Windows, Nmap was installed using the official installer available at [Nmap Downloads](https://nmap.org/download.html).
+
+For Ubuntu 22.04 on WSL, Nmap was installed using the Ubuntu package manager.
+
+Installation was verified using:
 
 ```bash
 nmap --version
 ```
 
 ### Commands Used
+
+The following commands were used during the practical exercise.
 
 **1. Verify Nmap installation**
 
@@ -47,98 +59,120 @@ nmap --version
 nmap 127.0.0.1
 ```
 
-**3. Detect service versions and save results**
+**3. Save basic scan results**
+
+```bash
+nmap 127.0.0.1 -oN nmap_basic_scan.txt
+```
+
+**4. Detect service versions and save results**
 
 ```bash
 nmap -sV 127.0.0.1 -oN nmap_scan_results.txt
 ```
 
-**4. Perform OS detection and save results**
+**5. Perform OS detection and save results**
 
 ```bash
-nmap -O 127.0.0.1 -oN nmap_os_detection.txt
+sudo nmap -O 127.0.0.1 -oN nmap_os_detection.txt
 ```
 
-### Scan Results
+### Windows Scan Results
 
-The basic scan reported the following open ports:
+The Windows scan results recorded during the practical exercise reported the following ports:
 
 | Port | Service reported by Nmap | Purpose and security consideration |
 |---|---|---|
-| 135/tcp | MSRPC | Used by Windows Remote Procedure Call services. Restrict unnecessary network access. |
-| 445/tcp | Microsoft-DS | Commonly associated with Windows SMB file and printer sharing. Keep systems updated and restrict access using firewall rules. |
-| 3306/tcp | MySQL | Commonly used for MySQL database connections. Restrict access to trusted clients and use strong authentication. |
-| 6646/tcp | Unknown | Nmap reported this port as open during the basic scan. The application or service has not yet been identified. |
+| `135/tcp` | MSRPC | Used by Windows Remote Procedure Call services. Restrict unnecessary network access. |
+| `445/tcp` | Microsoft-DS | Commonly associated with Windows SMB file and printer sharing. Keep systems updated and restrict access using firewall rules. |
+| `3306/tcp` | MySQL | Commonly used for MySQL database connections. Restrict access to trusted clients and use strong authentication. |
+| `6646/tcp` | Unknown | Reported as open in the recorded basic scan. The application or service requires further identification. |
 
-The service-version scan identified Microsoft Windows RPC on port 135 and MySQL 8.0.33 on port 3306. Port 445 was reported as `microsoft-ds?`, indicating that the service identification was uncertain.
+The recorded service-version scan identified Microsoft Windows RPC on port 135 and MySQL 8.0.33 on port 3306. Port 445 was reported as `microsoft-ds?`, indicating uncertain service identification.
 
-The OS detection scan reported port 8090/tcp with the service label `opsmessaging`. This port appeared in the OS detection scan but was not listed in the earlier basic scan.
+The recorded OS detection results initially suggested Microsoft Windows 11, with an estimated version range of Windows 11 24H2–25H2. The same set of observations also included port `8090/tcp`, labelled `opsmessaging`. This port should be verified against the original scan output before drawing conclusions.
 
-### OS Detection Results
+### Ubuntu WSL Scan Results
 
-The command `nmap -O 127.0.0.1` initially reported Microsoft Windows 11, with OS details estimated as Windows 11 24H2–25H2.
+In Ubuntu 22.04 on WSL, Nmap 7.80 was used to scan `127.0.0.1`.
 
-In a subsequent saved scan using `nmap -O 127.0.0.1 -oN nmap_os_detection.txt`, Nmap reported:
+The basic scan and service-version scan reported:
+
+- Host status: Up
+- All 1,000 scanned TCP ports: Closed
+- Service detection: No open services identified in the scanned ports
+
+The saved OS detection scan reported:
 
 - Host status: Up
 - Network distance: 0 hops
 - OS detection: No exact OS match found
 
-The OS version reported by Nmap is an estimate. The saved scan did not produce an exact OS match.
+These are the results of the Ubuntu WSL scans and are separate from the Windows scan observations above. Results can differ depending on the environment, running services, and scan conditions.
 
 ### Security Observations
 
-- An open port indicates that a service may be listening on the machine; it does not automatically mean that the system is vulnerable.
-- Unnecessary services should be disabled when appropriate.
-- Firewall rules should restrict access to services that do not need to be reachable from other devices.
+- An open port indicates that a service may be listening; it does not automatically mean the system is vulnerable.
+- Closed ports indicate that no service was accepting connections on those scanned TCP ports at the time of the scan.
+- Unnecessary services should be disabled where appropriate.
+- Firewall rules should restrict services that do not need to be reachable from other devices.
 - Database services should use strong authentication and appropriate access controls.
-- The service associated with port 6646 and the application associated with port 8090 require further verification before drawing conclusions.
+- Unknown or uncertain service labels should be investigated before deciding whether a service is safe or vulnerable.
+- OS detection is an estimate and may not always identify the exact operating system.
 
 ### Output Files
 
+- `nmap_basic_scan.txt` — saved basic scan output.
 - `nmap_scan_results.txt` — saved service-version scan output.
-- `nmap_os_detection.txt` — saved OS detection scan output.
-- Nmap screenshots — terminal screenshots showing scan commands and results.
-- Demo video — practical demonstration of the scan commands and findings.
+- `nmap_os_detection.txt` — saved OS detection output.
+- `nmap_os_detection_screenshot.png` — OS detection screenshot.
+- `nmap_scan_screenshot.png.png` — scan screenshot.
+
+A practical demonstration video will be added when recording and upload are complete.
 
 ### Ethical Use
 
-All scans in this task were performed against `127.0.0.1`, the loopback address of my own computer. Scanning other systems requires explicit authorization. The purpose of this task is educational and defensive security analysis.
+The scans were performed against `127.0.0.1`, the loopback address, in local environments. Scanning systems other than those you own requires explicit authorization. This task is intended for educational and defensive security analysis.
+
+---
 
 ## Task 4: Common Network Security Threats
 
-The report covering Denial-of-Service (DoS/DDoS), Man-in-the-Middle (MITM), IP spoofing, DNS spoofing, real-world examples, mitigation strategies, and key takeaways is available in:
+The report covers Denial-of-Service (DoS/DDoS), Man-in-the-Middle (MITM), IP spoofing, DNS spoofing, real-world examples, mitigation strategies, and key takeaways.
 
-`network_security_threats_report.md`
+**Report:** [`network_security_threats_report.md`](network_security_threats_report.md)
 
 ## Task 5: Social Engineering Attacks
 
-The report covering phishing, pretexting, baiting, prevention strategies, awareness practices, and attack comparisons is available in:
+The report covers phishing, pretexting, baiting, prevention strategies, awareness practices, and comparisons of social engineering techniques.
 
-`social_engineering_report.md`
+**Report:** [`social_engineering_report.md`](social_engineering_report.md)
 
 ## Task 6: Importance of Patch Management
 
-The report covering vulnerability management, security updates, real-world incidents, patching lifecycle, implementation checklist, and common challenges is available in:
+The report covers vulnerability management, security updates, real-world incidents, the patch management lifecycle, an implementation checklist, and common challenges.
 
-`patch_management_report.md`
+**Report:** [`patch_management_report.md`](patch_management_report.md)
+
+---
 
 ## Repository Structure
 
 ```text
 OIBSIP/
 ├── README.md
+├── nmap_basic_scan.txt
 ├── nmap_scan_results.txt
 ├── nmap_os_detection.txt
+├── nmap_os_detection_screenshot.png
+├── nmap_scan_screenshot.png.png
 ├── network_security_threats_report.md
 ├── social_engineering_report.md
-├── patch_management_report.md
-└── Nmap screenshots and demo video
+└── patch_management_report.md
 ```
 
-Note: The repository structure above describes the intended organization. Keep only files that have actually been uploaded to the repository, and update screenshot or video filenames to match the actual names.
+The structure above reflects the files currently identified in the repository. Add the demo video to this list after uploading it, using its actual filename.
 
 ## Conclusion
 
-These tasks helped me practice basic network scanning, understand common cybersecurity threats, recognize social engineering techniques, and learn the importance of timely security updates.
-
+These tasks provided practical exposure to basic network scanning and helped build an understanding of common cybersecurity threats, social engineering techniques, and the importance of timely security updates. The work emphasizes authorized testing, careful interpretation of scan results, and defensive security practices.
