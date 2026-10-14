@@ -2,13 +2,15 @@
 
 ## 1. Introduction
 
-Social engineering is the use of deception or psychological manipulation to persuade people to reveal confidential information, transfer money, or perform unsafe actions. These attacks often exploit trust, urgency, fear, or curiosity.
+Social engineering is the use of deception or psychological manipulation to persuade people to reveal confidential information, transfer money, or perform unsafe actions. These attacks often exploit trust, urgency, fear, curiosity, or a person's willingness to help.
+
+Social engineering is a significant cybersecurity risk because attackers may target people instead of directly exploiting technical vulnerabilities. Security awareness, identity verification, and clear reporting procedures can help reduce these risks.
 
 ## 2. Phishing
 
 ### Description
 
-Phishing uses fraudulent messages or websites to trick people into sharing credentials, financial details, or other sensitive information.
+Phishing uses fraudulent messages, websites, or communications to trick people into sharing credentials, financial details, or other sensitive information.
 
 ### Common Types
 
@@ -19,36 +21,38 @@ Phishing uses fraudulent messages or websites to trick people into sharing crede
 
 ### Real-World Example
 
-In 2016, attackers used a targeted phishing email to deceive an employee associated with the Democratic National Committee, contributing to the compromise of email accounts.
+In 2016, targeted phishing emails were used in attacks associated with the Democratic National Committee (DNC) email compromise. The incident demonstrated how deceptive messages can help attackers gain access to sensitive email accounts.
 
 ### Impact
 
-- Stolen passwords and account access.
-- Financial loss and data exposure.
+- Stolen passwords and unauthorized account access.
+- Financial loss and exposure of confidential data.
 - Damage to an organization's reputation.
+- Further attacks using compromised accounts.
 
 ### Prevention
 
 1. Verify unexpected requests through a separate, trusted communication channel.
 2. Use multifactor authentication (MFA) and unique passwords.
-3. Avoid opening suspicious links or attachments.
+3. Avoid opening suspicious links or unexpected attachments.
 4. Provide regular phishing-awareness training.
 
 ## 3. Pretexting
 
 ### Description
 
-Pretexting occurs when an attacker invents a believable story or identity to persuade someone to disclose information or take an action.
+Pretexting occurs when an attacker invents a believable story or impersonates a trusted person to persuade someone to disclose information or take an action. The attacker may pretend to be an IT support employee, manager, vendor, or other authorized individual.
 
 ### Example
 
-A person may pretend to be an IT support employee and request a colleague's password to "fix" an account problem.
+A person may pretend to be an IT support employee and ask a colleague for a password or verification code to "fix" an account problem. This is an illustrative scenario showing how pretexting works; it is not presented as a specific documented incident.
 
 ### Impact
 
 - Unauthorized access to systems.
 - Exposure of confidential information.
 - Potential financial or operational losses.
+- Bypassing of normal verification procedures.
 
 ### Mitigation
 
@@ -60,17 +64,18 @@ A person may pretend to be an IT support employee and request a colleague's pass
 
 ### Description
 
-Baiting uses something tempting, such as a free download or an unattended USB drive, to persuade a person to perform an unsafe action.
+Baiting uses something tempting, such as a free download, a promised reward, or an unattended USB drive, to persuade a person to perform an unsafe action. The bait may lead to malware infection or unauthorized access.
 
 ### Example
 
-An unknown USB drive labelled "Salary Details" is left in a workplace. Someone who plugs it into a computer may expose the device to malware.
+An unknown USB drive labelled "Salary Details" is left in a workplace. A curious employee plugs it into a computer, potentially exposing the device to malware. This is an illustrative scenario, not a specific documented case study.
 
 ### Impact
 
 - Malware infection.
 - Data theft or loss.
 - Compromise of connected systems.
+- Business disruption and recovery costs.
 
 ### Mitigation
 
@@ -78,11 +83,11 @@ An unknown USB drive labelled "Salary Details" is left in a workplace. Someone w
 2. Download software only from trusted sources.
 3. Use endpoint protection and keep systems updated.
 
-## 5. Quid Pro Quo (Additional Attack)
+## 5. Quid Pro Quo
 
 ### Description
 
-Quid pro quo is an attack in which an attacker offers a supposed benefit or service in exchange for information or access.
+Quid pro quo is a social engineering attack in which an attacker offers a supposed benefit or service in exchange for information or access. The offer may appear helpful, but the attacker is attempting to obtain sensitive information or persuade the victim to violate security procedures.
 
 ### Example
 
@@ -90,18 +95,18 @@ A caller offers technical assistance in return for a user's login details or one
 
 ### Prevention
 
-- Verify support requests through official channels.
-- Never disclose passwords or one-time codes.
-- Follow organizational security policies for technical support.
+1. Verify support requests through official channels.
+2. Never disclose passwords or one-time authentication codes.
+3. Follow organizational security policies for technical support.
 
 ## 6. Comparison Table
 
-| Attack | Common Method | Main Risk | Prevention |
+| **Attack Type** | **Primary Target** | **Psychological Lever** | **Best Countermeasure** |
 |---|---|---|---|
-| Phishing | Fraudulent emails, texts, or websites | Credential theft | Verify messages and use MFA |
-| Pretexting | False identity or story | Unauthorized disclosure | Verify identity |
-| Baiting | Tempting downloads or devices | Malware infection | Avoid unknown devices and files |
-| Quid pro quo | False offer of a service | Disclosure of credentials | Use official support channels |
+| Phishing | Email users and online account holders | Urgency, fear, curiosity, or trust | Verify messages independently and use MFA |
+| Pretexting | Employees, customers, or support staff | Authority and trust in a believable story | Verify identity through official procedures |
+| Baiting | People tempted by unknown devices or downloads | Curiosity or desire for a reward | Avoid unknown devices and untrusted downloads |
+| Quid pro quo | Users seeking help or a promised benefit | Reciprocity and expectation of a service | Use official support channels and never share credentials |
 
 ## 7. Security Awareness Checklist
 
@@ -109,15 +114,15 @@ A caller offers technical assistance in return for a user's login details or one
 2. Do not click suspicious links or open unexpected attachments.
 3. Never share passwords or one-time authentication codes.
 4. Verify urgent payment or information requests independently.
-5. Report suspicious messages to the appropriate security contact.
+5. Report suspicious messages and interactions to the appropriate security contact.
 
-## 8. References
+## 8. Conclusion
 
-1. CISA — Avoiding Social Engineering and Phishing Attacks: https://www.cisa.gov/news-events/news/avoiding-social-engineering-and-phishing-attacks
-2. NIST — Security Awareness and Training: https://csrc.nist.gov/projects/security-awareness-training
-3. Federal Trade Commission — How To Recognize and Avoid Phishing Scams: https://consumer.ftc.gov/articles/how-recognize-and-avoid-phishing-scams
-4. UK National Cyber Security Centre — Phishing Attacks: https://www.ncsc.gov.uk/guidance/phishing
+Social engineering attacks target people as well as technology. Phishing, pretexting, baiting, and quid pro quo attacks exploit trust, urgency, curiosity, or the desire for assistance. Verification, awareness training, multifactor authentication, and clear reporting procedures can help organizations reduce these risks.
 
-## 9. Conclusion
+## 9. References
 
-Social engineering attacks target people as well as technology. Verification, awareness training, multifactor authentication, and clear reporting procedures can help reduce the risk.
+1. **CISA — Avoiding Social Engineering and Phishing Attacks:** https://www.cisa.gov/news-events/news/avoiding-social-engineering-and-phishing-attacks
+2. **NIST — Security Awareness and Training:** https://csrc.nist.gov/projects/security-awareness-training
+3. **Federal Trade Commission — How To Recognize and Avoid Phishing Scams:** https://consumer.ftc.gov/articles/how-recognize-and-avoid-phishing-scams
+4. **UK National Cyber Security Centre — Phishing Attacks:** https://www.ncsc.gov.uk/guidance/phishing
