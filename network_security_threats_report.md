@@ -90,12 +90,12 @@ DNS spoofing involves providing false Domain Name System (DNS) information so th
 
 ## 6. Threat Comparison
 
-| Threat | Main Goal | Possible Impact | Key Mitigation |
+| **Attack Vector** | **Who Is at Risk** | **Difficulty to Execute** | **Ease of Mitigation** |
 |---|---|---|---|
-| DoS/DDoS | Disrupt availability | Service outage | DDoS protection and traffic filtering |
-| MITM | Intercept communication | Data or credential theft | HTTPS/TLS and secure authentication |
-| IP Spoofing | Forge source IP addresses | Reflection attacks and harder attribution | Ingress/egress filtering |
-| DNS Spoofing | Redirect users to false destinations | Phishing and traffic redirection | DNSSEC validation and secure DNS |
+| DoS/DDoS | Websites, online services, businesses, and their users | Moderate to High; large-scale attacks may require many compromised devices or traffic sources | Moderate; DDoS protection, traffic filtering, and incident response can reduce impact |
+| MITM | Users communicating over insecure networks and organizations handling sensitive data | Moderate; opportunities depend on network security and certificate validation | Relatively Easy to Reduce; HTTPS/TLS, valid certificates, and secure authentication help prevent many attacks |
+| IP Spoofing | Networks and services exposed to forged-source traffic, including DDoS targets | Moderate; effective attacks depend on the network and attack method | Moderate; ingress/egress filtering and anti-spoofing controls help reduce risk |
+| DNS Spoofing | Internet users, businesses, and organizations relying on DNS | Moderate to High; difficulty depends on DNS protections and the attack technique | Moderate; DNSSEC validation, secure DNS configuration, and HTTPS reduce risk |
 
 ## 7. Key Takeaways
 
