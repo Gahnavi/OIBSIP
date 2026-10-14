@@ -1,0 +1,6 @@
+# Nmap 7.80 scan initiated Wed Oct 14 15:50:29 2026 as: nmap -oN nmap_basic_scan.txt 127.0.0.1
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.000043s latency).
+All 1000 scanned ports on localhost (127.0.0.1) are closed
+
+# Nmap done at Wed Oct 14 15:50:29 2026 -- 1 IP address (1 host up) scanned in 0.04 seconds
