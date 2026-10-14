@@ -2,12 +2,15 @@
 
 ## About
 
-This repository contains my Security Analyst internship task submissions for Oasis Infobyte. The tasks cover network scanning, firewall configuration, network security threats, social engineering attacks, and patch management.
+This repository contains my Security Analyst internship task submissions for Oasis Infobyte. The tasks cover network scanning, firewall configuration, SQL injection testing in a local vulnerable web application, network security threats, social engineering attacks, and patch management.
+
+The practical tasks were performed in local lab environments for educational and defensive security purposes.
 
 ## Tasks
 
 - **Task 1:** Basic Network Scanning with Nmap
 - **Task 2:** Basic Firewall Configuration with UFW
+- **Task 3:** SQL Injection on DVWA (Low Security)
 - **Task 4:** Research Report — Common Network Security Threats
 - **Task 5:** Research Report — Social Engineering Attacks
 - **Task 6:** Research Report — Importance of Patch Management
@@ -141,7 +144,7 @@ These are the results of the Ubuntu WSL scans and are separate from the Windows 
 - `nmap_os_detection_screenshot.png` — OS detection screenshot.
 - `nmap_scan_screenshot.png.png` — scan screenshot.
 
-**Practical demonstration video:** Pending. It will be added after recording and uploading the demonstration.
+**Practical demonstration video:** Pending.
 
 ## Ethical Use
 
@@ -176,8 +179,8 @@ UFW was enabled and configured with the following incoming rules:
 |---|---|---|---|
 | 22 | TCP | Allow | Permits SSH traffic when remote administration is required. |
 | 443 | TCP | Allow | Permits incoming HTTPS traffic. |
-| 80 | TCP | Deny | Blocks incoming HTTP traffic. |
-| 8080 | TCP | Deny | Blocks incoming traffic on an additional commonly used web application port. |
+| 80 | TCP | Deny | Denies incoming HTTP traffic according to the configured rule. |
+| 8080 | TCP | Deny | Denies incoming traffic on an additional commonly used web application port. |
 
 The rules were verified for both IPv4 and IPv6. UFW reported the following default policies:
 
@@ -222,8 +225,6 @@ The firewall status showed that UFW was active and the configured rules were pre
 
 The `ufw_configuration.sh` script automates the application of the firewall rules and displays the final firewall status.
 
-The script contains the following commands:
-
 ```bash
 #!/bin/bash
 
@@ -252,7 +253,7 @@ The script reported that UFW was active and displayed the configured rules. Mess
 
 ## Testing and Verification
 
-### Firewall status verification
+### Firewall Status Verification
 
 The command below was used to verify the firewall status and rules:
 
@@ -269,7 +270,7 @@ The output showed:
 
 Corresponding IPv6 rules were also displayed.
 
-### HTTP connectivity test
+### HTTP Connectivity Test
 
 An initial test using Netcat and `curl` failed to connect to port 80 because no service was listening at that time. This initial failure alone did not prove that the firewall had blocked the connection.
 
@@ -292,9 +293,9 @@ A separate test from an applicable external source would be required to conclusi
 ## Why These Rules Were Chosen
 
 - **Allow SSH (22):** Supports remote administration when SSH access is required.
-- **Deny HTTP (80):** Blocks incoming unencrypted web traffic.
+- **Deny HTTP (80):** Denies incoming HTTP traffic under the configured rule.
 - **Allow HTTPS (443):** Permits encrypted web traffic.
-- **Deny port 8080:** Blocks an additional port commonly used by web applications and development servers.
+- **Deny port 8080:** Denies incoming traffic on a commonly used web application port.
 
 These rules demonstrate the principle of restricting unnecessary incoming connections while allowing selected services. A production firewall should permit only the services and source addresses that are genuinely required.
 
@@ -304,7 +305,7 @@ These rules demonstrate the principle of restricting unnecessary incoming connec
 - `ufw_firewall_status.png` — screenshot showing the firewall status and rules.
 - `ufw_rules.txt` — saved firewall rules.
 
-**Practical demonstration video:** Pending. It will be recorded and added after the remaining task documentation is complete.
+**Practical demonstration video:** Pending.
 
 ## Result
 
@@ -312,31 +313,245 @@ UFW was enabled successfully, and the configured IPv4 and IPv6 rules were verifi
 
 ---
 
+# Task 3: SQL Injection on DVWA (Low Security)
+
+## Objective
+
+To demonstrate a classic SQL injection vulnerability in Damn Vulnerable Web Application (DVWA) at Low security level, observe the results, and document methods to prevent SQL injection.
+
+## What Is SQL Injection?
+
+SQL injection (SQLi) is a web application vulnerability that occurs when untrusted input is incorporated into a database query without proper separation between data and SQL instructions.
+
+An attacker may be able to change the meaning of a query, retrieve records that should not be displayed, or bypass intended application logic.
+
+DVWA provides a deliberately vulnerable environment for learning how these vulnerabilities work and how to prevent them.
+
+## Environment and Tools
+
+- Operating System: Windows 11
+- Web server and PHP environment: XAMPP
+- Vulnerable application: Damn Vulnerable Web Application (DVWA)
+- Application URL: `http://localhost:8081/DVWA/`
+- Test module: SQL Injection
+- Security level: Low
+- Test scope: Local DVWA installation
+
+## Setup and Configuration
+
+1. Installed XAMPP and started the Apache and MySQL services.
+2. Placed the DVWA application files in `C:\xampp\htdocs\DVWA`.
+3. Opened the application locally using `http://localhost:8081/DVWA/`.
+4. Configured and initialized the DVWA database.
+5. Selected the Low security level from the DVWA Security settings.
+6. Opened the SQL Injection module to test normal input and SQL injection payloads.
+
+The non-default Apache port `8081` was used because port `80` was already occupied in the local Windows/WSL environment.
+
+## Test 1: Normal Input
+
+**Input:** `2`
+
+### Observed Result
+
+The application returned one matching record:
+
+- ID: 2
+- First name: Gordon
+- Surname: Brown
+
+This established the baseline behavior for a normal user ID input.
+
+**Screenshot:** `sqli_normal_input.png`
+
+## Test 2: Classic SQL Injection
+
+**Payload:**
+
+```sql
+' OR '1'='1
+```
+
+### Explanation
+
+The condition `'1'='1'` is always true. In a vulnerable query, the injected `OR` condition can change the logic of the original SQL statement and cause multiple records to be returned rather than only the requested ID.
+
+### Observed Result
+
+The application displayed multiple records, including:
+
+- Admin — Admin
+- Gordon — Brown
+- Hack — Me
+- Pablo — Picasso
+- Bob — Smith
+
+This demonstrated that the input changed the query behavior and returned records beyond the single record expected from a normal ID lookup.
+
+**Screenshot:** `sqli_payload1_result.png`
+
+## Test 3: SQL Injection with a SQL Comment
+
+**Payload:**
+
+```sql
+' OR '1'='1' #
+```
+
+### Explanation
+
+In the tested MySQL/MariaDB-compatible context, `#` starts a SQL comment. It can cause the remainder of the query line to be ignored. When the input is inserted unsafely into a query, the combination of the always-true condition and comment can change the query's behavior.
+
+### Observed Result
+
+The application again displayed multiple user records instead of a single record.
+
+**Screenshot:** `sqli_payload2_result.png`
+
+## Results Summary
+
+| Test | Input | Observed Result |
+|---|---|---|
+| Normal input | `2` | One matching record was displayed: Gordon Brown. |
+| SQL injection payload 1 | `' OR '1'='1` | Multiple user records were displayed. |
+| SQL injection payload 2 | `' OR '1'='1' #` | Multiple user records were displayed. |
+
+The results demonstrate that the DVWA SQL Injection module at Low security level was vulnerable to the tested inputs.
+
+## Why the Vulnerability Occurs
+
+The vulnerability occurs when application input is treated as part of an SQL command instead of being handled strictly as data.
+
+For example, a vulnerable application might construct a query by concatenating user input into a SQL string. An input containing SQL syntax may then change the query's conditions.
+
+The observed DVWA behavior demonstrates why SQL queries must be designed to keep user-supplied values separate from executable SQL instructions.
+
+## Prevention Methods
+
+### 1. Use Parameterized Queries and Prepared Statements
+
+Use prepared statements so user input is passed as a parameter rather than concatenated into SQL code.
+
+Example using PHP PDO:
+
+```php
+$stmt = $pdo->prepare(
+    "SELECT first_name, last_name FROM users WHERE user_id = :id"
+);
+
+$stmt->execute(['id' => $userId]);
+
+$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+```
+
+This approach separates the query structure from the supplied value.
+
+### 2. Validate Input
+
+Validate input according to the expected type and format. For example, a numeric user ID should be checked as a valid integer.
+
+Input validation is an additional safeguard, not a replacement for parameterized queries.
+
+### 3. Apply Least-Privilege Database Permissions
+
+The application database account should have only the permissions required for its functions. Avoid using an unnecessarily privileged database account for routine application queries.
+
+### 4. Handle Errors Safely
+
+Do not expose database errors, SQL statements, or sensitive implementation details to end users. Log diagnostic information securely for authorized administrators.
+
+### 5. Perform Security Testing
+
+Test applications in an authorized environment, review database query construction, and use security testing tools to identify and fix vulnerabilities before deployment.
+
+## Task 3 Output Files
+
+- `sql_injection_notes.md` — payload log, explanations, observations, and prevention notes.
+- `sqli_normal_input.png` — screenshot of the normal input result.
+- `sqli_payload1_result.png` — screenshot of the first SQL injection result.
+- `sqli_payload2_result.png` — screenshot of the second SQL injection result.
+
+**Practical demonstration video:** Pending.
+
+## Result
+
+The SQL Injection module in the local DVWA application was tested at Low security level. Normal input returned one matching record, while both tested SQL injection payloads returned multiple records. The exercise demonstrated how unsafe SQL query construction can expose unintended database results and why parameterized queries are important for prevention.
+
+**Safety note:** DVWA is intentionally vulnerable and should remain confined to a local or otherwise isolated, authorized lab environment. Do not expose this installation to the public internet.
+
+---
+
 # Task 4: Common Network Security Threats
 
-The report covers Denial-of-Service (DoS/DDoS), Man-in-the-Middle (MITM), IP spoofing, DNS spoofing, real-world examples, mitigation strategies, and key takeaways.
+## Objective
 
-**Report:** `network_security_threats_report.md`
+To research common network security threats, understand their impact, and identify mitigation strategies.
+
+The report covers:
+
+- Denial-of-Service (DoS) and Distributed Denial-of-Service (DDoS)
+- Man-in-the-Middle (MITM) attacks
+- IP spoofing
+- DNS spoofing
+- Real-world examples
+- Mitigation strategies
+- Key takeaways
+
+## Report
+
+`network_security_threats_report.md`
+
+The report summarizes the threats, their potential impact, and defensive measures that organizations can use to improve network security.
 
 ---
 
 # Task 5: Social Engineering Attacks
 
-The report covers phishing, pretexting, baiting, prevention strategies, awareness practices, and comparisons of social engineering techniques.
+## Objective
 
-**Report:** `social_engineering_report.md`
+To understand social engineering techniques and identify ways to reduce the risk of human-targeted cyberattacks.
+
+The report covers:
+
+- Phishing
+- Pretexting
+- Baiting
+- Prevention strategies
+- Security awareness practices
+- Comparison of social engineering techniques
+
+## Report
+
+`social_engineering_report.md`
+
+The report highlights the importance of user awareness, verification of suspicious requests, and safe handling of links, attachments, credentials, and sensitive information.
 
 ---
 
 # Task 6: Importance of Patch Management
 
-The report covers vulnerability management, security updates, real-world incidents, the patch management lifecycle, an implementation checklist, and common challenges.
+## Objective
 
-**Report:** `patch_management_report.md`
+To understand the importance of patch management in maintaining secure systems and reducing exposure to known vulnerabilities.
+
+The report covers:
+
+- Vulnerability management
+- Security updates
+- Real-world incidents
+- The patch management lifecycle
+- An implementation checklist
+- Common challenges
+
+## Report
+
+`patch_management_report.md`
+
+The report explains how identifying, prioritizing, testing, deploying, and verifying security patches can help organizations reduce risk and maintain more secure systems.
 
 ---
 
-## Repository Structure
+# Repository Structure
 
 ```text
 OIBSIP/
@@ -349,15 +564,42 @@ OIBSIP/
 ├── ufw_configuration.sh
 ├── ufw_firewall_status.png
 ├── ufw_rules.txt
+├── sql_injection_notes.md
+├── sqli_normal_input.png
+├── sqli_payload1_result.png
+├── sqli_payload2_result.png
 ├── network_security_threats_report.md
 ├── social_engineering_report.md
 └── patch_management_report.md
 ```
 
-The practical demonstration videos for the hands-on tasks will be added to the repository after they are recorded and uploaded.
+## Demonstration Videos
 
-## Conclusion
+Practical demonstration videos for the hands-on tasks will be recorded and added after the task documentation is complete.
 
-These tasks provided practical exposure to basic network scanning, Linux firewall configuration, common cybersecurity threats, social engineering techniques, and the importance of timely security updates.
+- Task 1 — Nmap network scanning: Pending
+- Task 2 — UFW firewall configuration: Pending
+- Task 3 — SQL injection in local DVWA: Pending
 
-The work emphasizes authorized testing, careful interpretation of technical results, firewall rule verification, and defensive security practices.
+---
+
+# Key Learnings
+
+Through these tasks, I gained exposure to:
+
+- Network scanning and interpretation of open and closed ports using Nmap.
+- Basic firewall configuration and rule verification using UFW.
+- SQL injection testing in an intentionally vulnerable local web application.
+- The importance of prepared statements and parameterized queries.
+- Common network security threats and their mitigation.
+- Social engineering techniques and security awareness.
+- The role of patch management in reducing security risks.
+- Ethical testing, documentation, and defensive security practices.
+
+# Conclusion
+
+These tasks provided practical and research-based exposure to important cybersecurity concepts, including network scanning, firewall configuration, SQL injection, common network threats, social engineering, and patch management.
+
+The work emphasizes authorized testing, careful interpretation of technical results, secure database query design, firewall rule verification, and defensive security practices.
+
+The hands-on exercises and research reports form a foundation for continued learning in cybersecurity and security analysis.
