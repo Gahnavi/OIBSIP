@@ -2,11 +2,12 @@
 
 ## About
 
-This repository contains my Security Analyst internship task submissions for Oasis Infobyte. The tasks cover network scanning, network security threats, social engineering attacks, and patch management.
+This repository contains my Security Analyst internship task submissions for Oasis Infobyte. The tasks cover network scanning, firewall configuration, network security threats, social engineering attacks, and patch management.
 
 ## Tasks
 
 - **Task 1:** Basic Network Scanning with Nmap
+- **Task 2:** Basic Firewall Configuration with UFW
 - **Task 4:** Research Report — Common Network Security Threats
 - **Task 5:** Research Report — Social Engineering Attacks
 - **Task 6:** Research Report — Importance of Patch Management
@@ -55,8 +56,6 @@ nmap --version
 
 ## Commands Used
 
-The following commands were used during the practical exercise.
-
 ### 1. Verify Nmap Installation
 
 ```bash
@@ -89,7 +88,7 @@ On Ubuntu WSL, OS detection was performed with elevated privileges:
 sudo nmap -O 127.0.0.1 -oN nmap_os_detection.txt
 ```
 
-**Note:** The commands above document the practical steps. The actual scan results can vary depending on the environment and the services running at the time of scanning.
+**Note:** Scan results can vary depending on the environment and the services running at the time of scanning.
 
 ## Windows Scan Results
 
@@ -152,17 +151,182 @@ This task is intended for educational and defensive security analysis.
 
 ---
 
+# Task 2: Basic Firewall Configuration with UFW
+
+## Objective
+
+To configure a basic Linux firewall using UFW (Uncomplicated Firewall), apply rules to allow and deny specific network traffic, and verify the firewall configuration.
+
+## What Is UFW?
+
+UFW is a firewall management tool for Linux that simplifies the process of configuring network traffic rules. It helps administrators control incoming and outgoing connections using port numbers, protocols, and source addresses.
+
+## Environment and Tools
+
+- Operating System: Ubuntu 22.04 on Windows Subsystem for Linux (WSL)
+- Firewall: UFW (Uncomplicated Firewall)
+- Web server used for testing: Nginx
+- Connectivity testing tools: `curl` and Netcat
+
+## Firewall Configuration
+
+UFW was enabled and configured with the following incoming rules:
+
+| Port | Protocol | Action | Purpose |
+|---|---|---|---|
+| 22 | TCP | Allow | Permits SSH traffic when remote administration is required. |
+| 443 | TCP | Allow | Permits incoming HTTPS traffic. |
+| 80 | TCP | Deny | Blocks incoming HTTP traffic. |
+| 8080 | TCP | Deny | Blocks incoming traffic on an additional commonly used web application port. |
+
+The rules were verified for both IPv4 and IPv6. UFW reported the following default policies:
+
+- Incoming traffic: Denied by default
+- Outgoing traffic: Allowed by default
+- Routed traffic: Disabled by default
+
+## Commands Used
+
+### 1. Install UFW
+
+```bash
+sudo apt update
+sudo apt install ufw -y
+```
+
+### 2. Configure the Firewall Rules
+
+```bash
+sudo ufw allow 22/tcp
+sudo ufw deny 80/tcp
+sudo ufw allow 443/tcp
+sudo ufw deny 8080/tcp
+```
+
+### 3. Enable UFW
+
+```bash
+sudo ufw enable
+```
+
+### 4. Verify the Configuration
+
+```bash
+sudo ufw status verbose
+sudo ufw status numbered
+```
+
+The firewall status showed that UFW was active and the configured rules were present.
+
+## Automated Firewall Configuration Script
+
+The `ufw_configuration.sh` script automates the application of the firewall rules and displays the final firewall status.
+
+The script contains the following commands:
+
+```bash
+#!/bin/bash
+
+# UFW Firewall Configuration
+set -e
+
+sudo ufw allow 22/tcp
+sudo ufw deny 80/tcp
+sudo ufw allow 443/tcp
+sudo ufw deny 8080/tcp
+
+sudo ufw --force enable
+sudo ufw status verbose
+```
+
+To run the script:
+
+```bash
+chmod +x ufw_configuration.sh
+./ufw_configuration.sh
+```
+
+The script reported that UFW was active and displayed the configured rules. Messages indicating that an existing rule was skipped mean that the rule was already present.
+
+**Important:** Review the SSH rule and your access requirements before enabling a firewall on a remotely accessed machine. This configuration is intended for the local WSL lab environment.
+
+## Testing and Verification
+
+### Firewall status verification
+
+The command below was used to verify the firewall status and rules:
+
+```bash
+sudo ufw status numbered
+```
+
+The output showed:
+
+- Port 22/tcp — `ALLOW IN`
+- Port 443/tcp — `ALLOW IN`
+- Port 80/tcp — `DENY IN`
+- Port 8080/tcp — `DENY IN`
+
+Corresponding IPv6 rules were also displayed.
+
+### HTTP connectivity test
+
+An initial test using Netcat and `curl` failed to connect to port 80 because no service was listening at that time. This initial failure alone did not prove that the firewall had blocked the connection.
+
+Nginx was subsequently started:
+
+```bash
+sudo systemctl start nginx
+```
+
+The following command then returned the Nginx welcome page:
+
+```bash
+curl --max-time 5 http://127.0.0.1/
+```
+
+This confirmed that the local HTTP service was reachable from the test environment after Nginx started. It did not, by itself, prove that UFW blocked HTTP traffic from an external machine.
+
+A separate test from an applicable external source would be required to conclusively demonstrate the effect of the deny rule. WSL networking can affect how host and guest traffic interact, so results should be interpreted in the context of the test environment.
+
+## Why These Rules Were Chosen
+
+- **Allow SSH (22):** Supports remote administration when SSH access is required.
+- **Deny HTTP (80):** Blocks incoming unencrypted web traffic.
+- **Allow HTTPS (443):** Permits encrypted web traffic.
+- **Deny port 8080:** Blocks an additional port commonly used by web applications and development servers.
+
+These rules demonstrate the principle of restricting unnecessary incoming connections while allowing selected services. A production firewall should permit only the services and source addresses that are genuinely required.
+
+## Task 2 Output Files
+
+- `ufw_configuration.sh` — script for applying the firewall rules.
+- `ufw_firewall_status.png` — screenshot showing the firewall status and rules.
+- `ufw_rules.txt` — saved firewall rules.
+
+**Practical demonstration video:** Pending. It will be recorded and added after the remaining task documentation is complete.
+
+## Result
+
+UFW was enabled successfully, and the configured IPv4 and IPv6 rules were verified. The practical exercise demonstrated firewall activation, rule management, automation with a Bash script, and local HTTP connectivity testing.
+
+---
+
 # Task 4: Common Network Security Threats
 
 The report covers Denial-of-Service (DoS/DDoS), Man-in-the-Middle (MITM), IP spoofing, DNS spoofing, real-world examples, mitigation strategies, and key takeaways.
 
 **Report:** `network_security_threats_report.md`
 
+---
+
 # Task 5: Social Engineering Attacks
 
 The report covers phishing, pretexting, baiting, prevention strategies, awareness practices, and comparisons of social engineering techniques.
 
 **Report:** `social_engineering_report.md`
+
+---
 
 # Task 6: Importance of Patch Management
 
@@ -182,15 +346,18 @@ OIBSIP/
 ├── nmap_os_detection.txt
 ├── nmap_os_detection_screenshot.png
 ├── nmap_scan_screenshot.png.png
+├── ufw_configuration.sh
+├── ufw_firewall_status.png
+├── ufw_rules.txt
 ├── network_security_threats_report.md
 ├── social_engineering_report.md
 └── patch_management_report.md
 ```
 
-The structure above reflects the files currently identified in the repository. The practical demonstration video will be added to this list after uploading it, using its actual filename.
+The practical demonstration videos for the hands-on tasks will be added to the repository after they are recorded and uploaded.
 
 ## Conclusion
 
-These tasks provided practical exposure to basic network scanning and helped build an understanding of common cybersecurity threats, social engineering techniques, and the importance of timely security updates.
+These tasks provided practical exposure to basic network scanning, Linux firewall configuration, common cybersecurity threats, social engineering techniques, and the importance of timely security updates.
 
-The work emphasizes authorized testing, careful interpretation of scan results, and defensive security practices.
+The work emphasizes authorized testing, careful interpretation of technical results, firewall rule verification, and defensive security practices.
