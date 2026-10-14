@@ -36,7 +36,19 @@ Equifax disclosed a major breach involving the exploitation of a known vulnerabi
 
 **Lesson:** Organizations need clear ownership of systems, vulnerability tracking, timely remediation, and verification that patches have been applied.
 
-## 4. Patch Management Lifecycle
+## 4. Consequences of Not Patching
+
+Failing to apply security patches can leave systems vulnerable to known attacks. Common consequences include:
+
+- **Data breaches:** Attackers may exploit known vulnerabilities to access confidential information.
+- **Ransomware infections:** Unpatched systems may be compromised, causing files to become inaccessible.
+- **Operational downtime:** Security incidents can interrupt business operations and essential services.
+- **Financial and reputational damage:** Organizations may face recovery expenses, regulatory consequences, and loss of customer trust.
+- **Increased security risk:** Delayed updates allow known vulnerabilities to remain exploitable for longer.
+
+The WannaCry and Equifax incidents demonstrate how unpatched vulnerabilities can contribute to serious operational and data-security consequences. Organizations should use trusted sources such as CISA's Known Exploited Vulnerabilities Catalog to prioritize vulnerabilities that attackers are known to exploit.
+
+## 5. Patch Management Lifecycle
 
 1. **Discovery:** Maintain an inventory of operating systems, applications, devices, and software versions.
 2. **Assessment:** Identify applicable vulnerabilities and prioritize them by severity, exposure, and business impact.
@@ -46,7 +58,7 @@ Equifax disclosed a major breach involving the exploitation of a known vulnerabi
 
 The process should be repeated regularly, with exceptions documented and reviewed.
 
-## 5. Patch Management Checklist
+## 6. Patch Management Checklist
 
 1. Maintain an accurate inventory of hardware and software assets.
 2. Subscribe to vendor security advisories and vulnerability alerts.
@@ -56,7 +68,7 @@ The process should be repeated regularly, with exceptions documented and reviewe
 6. Verify updates and investigate failed installations.
 7. Keep secure backups and a rollback plan for important systems.
 
-## 6. Common Challenges and Solutions
+## 7. Common Challenges and Solutions
 
 | Challenge | Suggested Solution |
 |---|---|
@@ -67,11 +79,11 @@ The process should be repeated regularly, with exceptions documented and reviewe
 | Failed updates | Monitor deployment results and investigate failures |
 | Limited staff or budget | Prioritize high-risk vulnerabilities first |
 
-## 7. Conclusion
+## 8. Conclusion
 
 Patch management is an essential part of cybersecurity. Maintaining an asset inventory, prioritizing vulnerabilities, testing updates, deploying them promptly, and verifying success can reduce the risk of known vulnerabilities being exploited.
 
-## 8. References
+## 9. References
 
 1. CISA — Known Exploited Vulnerabilities Catalog: https://www.cisa.gov/known-exploited-vulnerabilities-catalog
 2. NIST — National Vulnerability Database: https://nvd.nist.gov/
@@ -79,7 +91,7 @@ Patch management is an essential part of cybersecurity. Maintaining an asset inv
 4. U.S. Government Accountability Office — Equifax Data Breach: https://www.gao.gov/products/gao-19-62
 5. Apache Struts Security Bulletins: https://struts.apache.org/announce/
 
-## 9. Key Takeaways
+## 10. Key Takeaways
 
 - Keep software and systems supported and updated.
 - Prioritize vulnerabilities based on risk, not just convenience.
